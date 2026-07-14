@@ -43,6 +43,72 @@
             tapping-term-ms = <200>;
         };
 
+        /*
+         * 上側編集キーのタップダンス
+         *
+         * 1タップ：コピー Ctrl+C
+         * 2タップ：切り取り Ctrl+X
+         */
+        edit_up_tap: edit_up_tap {
+            compatible = "zmk,behavior-tap-dance";
+            label = "COPY_OR_CUT";
+            #binding-cells = <0>;
+
+            tapping-term-ms = <200>;
+            bindings = <&kp LC(C)>, <&kp LC(X)>;
+        };
+
+        /*
+         * 上側編集キー
+         *
+         * タップ：edit_up_tapへ渡す
+         * 長押し：Undo Ctrl+Z
+         */
+        edit_up: edit_up {
+            compatible = "zmk,behavior-hold-tap";
+            label = "EDIT_UP";
+            #binding-cells = <0>;
+
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
+
+            bindings = <&kp LC(Z)>, <&edit_up_tap>;
+        };
+
+        /*
+         * 下側編集キーのタップダンス
+         *
+         * 1タップ：貼り付け Ctrl+V
+         * 2タップ：書式なし貼り付け Ctrl+Shift+V
+         */
+        edit_down_tap: edit_down_tap {
+            compatible = "zmk,behavior-tap-dance";
+            label = "PASTE_OR_PLAIN_PASTE";
+            #binding-cells = <0>;
+
+            tapping-term-ms = <200>;
+            bindings = <&kp LC(V)>, <&kp LC(LS(V))>;
+        };
+
+        /*
+         * 下側編集キー
+         *
+         * タップ：edit_down_tapへ渡す
+         * 長押し：Redo Ctrl+Shift+Z
+         */
+        edit_down: edit_down {
+            compatible = "zmk,behavior-hold-tap";
+            label = "EDIT_DOWN";
+            #binding-cells = <0>;
+
+            flavor = "tap-preferred";
+            tapping-term-ms = <200>;
+            quick-tap-ms = <0>;
+
+            bindings = <&kp LC(LS(Z))>, <&edit_down_tap>;
+        };
+
         ROTATE: ROTATE {
             compatible = "zmk,behavior-sensor-rotate-var";
             label = "ROTATE";
@@ -59,8 +125,8 @@
         default_layer {
             bindings = <
 &kp Q             &kp W         &kp E         &kp R                  &kp T                                                   &kp Y        &kp U  &kp I      &kp O    &kp P
-&kp A             &kp S         &kp D         &kp F                  &kp G        &mkp RCLK                  &kp UP_ARROW    &kp H        &kp J  &kp K      &lt 4 L  &lt 5 MINUS
-&mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                  &kp B        &mkp LCLK                  &kp DOWN_ARROW  &kp N        &kp M  &kp COMMA  &kp DOT  &mt LEFT_SHIFT SLASH
+&kp A             &kp S         &kp D         &kp F                  &kp G        &mkp RCLK                  &edit_up        &kp H        &kp J  &kp K      &lt 4 L  &lt 5 MINUS
+&mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                  &kp B        &mkp LCLK                  &edit_down      &kp N        &kp M  &kp COMMA  &kp DOT  &mt LEFT_SHIFT SLASH
 &kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt 6 INTERNATIONAL_4  &lt 1 SPACE  &lt 3 TAB      &kp BACKSPACE  &lt 2 ENTER                             &kp DEL
             >;
 
