@@ -31,6 +31,72 @@
             bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
             label = "TO_LAYER_0";
         };
+
+        /*
+         * Windows Alt+0095
+         * 日本語配列で "_" を入力する
+         * NumLockオンが前提
+         */
+        jis_underscore: jis_underscore {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+
+            bindings
+                = <&macro_press &kp LEFT_ALT>
+                , <&macro_tap
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_9
+                    &kp KP_NUMBER_5>
+                , <&macro_release &kp LEFT_ALT>
+                ;
+        };
+
+        /*
+         * Windows Alt+0092
+         * 日本語配列で "\" を入力する
+         * NumLockオンが前提
+         */
+        jis_backslash: jis_backslash {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+
+            bindings
+                = <&macro_press &kp LEFT_ALT>
+                , <&macro_tap
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_9
+                    &kp KP_NUMBER_2>
+                , <&macro_release &kp LEFT_ALT>
+                ;
+        };
+
+        /*
+         * Windows Alt+0124
+         * 日本語配列で "|" を入力する
+         * NumLockオンが前提
+         */
+        jis_pipe: jis_pipe {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            wait-ms = <40>;
+            tap-ms = <40>;
+
+            bindings
+                = <&macro_press &kp LEFT_ALT>
+                , <&macro_tap
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_1
+                    &kp KP_NUMBER_2
+                    &kp KP_NUMBER_4>
+                , <&macro_release &kp LEFT_ALT>
+                ;
+        };
     };
 
     behaviors {
@@ -98,12 +164,24 @@
             >;
         };
 
+        /*
+         * IDE向け日本語配列NUMレイヤー
+         *
+         * 左上： -  7  8  9  +
+         * 右上： @  ^  ~  (  )
+         *
+         * 左中： /  4  5  6  *  =
+         * 右中： ;  :  [  ]  {  }
+         *
+         * 左下： 0  1  2  3  .  _
+         * 右下： `  \  |  <  >  ?
+         */
         NUM {
             bindings = <
-&kp MINUS                   &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp COLON                                     &kp EQUAL         &kp CARET            &kp PLUS          &kp ASTERISK       &kp LEFT_PARENTHESIS
-&kp SLASH                   &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp DOUBLE_QUOTES  &trans         &kp LS(INTERNATIONAL_1)  &kp EXCLAMATION   &kp LEFT_BRACKET     &kp HASH          &kp DOLLAR             &kp PERCENT
-&mt LEFT_SHIFT KP_NUMBER_0  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp PERIOD         &kp UNDERSCORE  &trans                      &kp RIGHT_BRACKET  &kp NON_US_HASH      &kp RIGHT_BRACE   &kp TILDE2             &kp INTERNATIONAL_1
-&trans                      &trans           &trans           &trans           &trans             &trans          &trans                      &trans                                                                       &kp LS(INTERNATIONAL_3)
+&kp MINUS                &kp NUMBER_7  &kp NUMBER_8  &kp NUMBER_9  &kp COLON                                      &kp LEFT_BRACKET  &kp EQUAL       &kp PLUS           &kp ASTERISK       &kp LEFT_PARENTHESIS
+&kp SLASH                &kp NUMBER_4  &kp NUMBER_5  &kp NUMBER_6  &kp DOUBLE_QUOTES  &kp UNDERSCORE             &kp SEMICOLON     &kp SINGLE_QUOTE  &kp RIGHT_BRACKET  &kp NON_US_HASH   &kp RIGHT_BRACE    &kp TILDE2
+&mt LEFT_SHIFT NUMBER_0  &kp NUMBER_1  &kp NUMBER_2  &kp NUMBER_3  &kp PERIOD         &jis_underscore            &kp LEFT_BRACE    &jis_backslash    &jis_pipe          &kp LESS_THAN     &kp GREATER_THAN  &kp QUESTION
+&trans                   &trans        &trans        &trans        &trans             &trans                     &trans             &trans              &trans
             >;
         };
 
