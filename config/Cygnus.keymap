@@ -31,34 +31,6 @@
             bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
             label = "TO_LAYER_0";
         };
-
-        copy_macro: copy_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LC(C)>;
-            label = "COPY";
-        };
-
-        undo_macro: undo_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LC(Z)>;
-            label = "UNDO";
-        };
-
-        paste_macro: paste_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LC(V)>;
-            label = "PASTE";
-        };
-
-        redo_macro: redo_macro {
-            compatible = "zmk,behavior-macro";
-            #binding-cells = <0>;
-            bindings = <&kp LC(LS(Z))>;
-            label = "REDO";
-        };
     };
 
     behaviors {
@@ -74,25 +46,23 @@
         edit_up: edit_up {
             compatible = "zmk,behavior-hold-tap";
             label = "EDIT_UP";
-            #binding-cells = <0>;
+            bindings = <&kp>, <&kp>;
 
+            #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <200>;
             quick-tap-ms = <0>;
-
-            bindings = <&undo_macro>, <&copy_macro>;
         };
 
         edit_down: edit_down {
             compatible = "zmk,behavior-hold-tap";
             label = "EDIT_DOWN";
-            #binding-cells = <0>;
+            bindings = <&kp>, <&kp>;
 
+            #binding-cells = <2>;
             flavor = "tap-preferred";
             tapping-term-ms = <200>;
             quick-tap-ms = <0>;
-
-            bindings = <&redo_macro>, <&paste_macro>;
         };
 
         ROTATE: ROTATE {
@@ -110,10 +80,10 @@
 
         default_layer {
             bindings = <
-&kp Q             &kp W         &kp E         &kp R                  &kp T                                                   &kp Y        &kp U  &kp I      &kp O    &kp P
-&kp A             &kp S         &kp D         &kp F                  &kp G        &mkp RCLK                  &edit_up        &kp H        &kp J  &kp K      &lt 4 L  &lt 5 MINUS
-&mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                  &kp B        &mkp LCLK                  &edit_down      &kp N        &kp M  &kp COMMA  &kp DOT  &mt LEFT_SHIFT SLASH
-&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt 6 INTERNATIONAL_4  &lt 1 SPACE  &lt 3 TAB      &kp BACKSPACE  &lt 2 ENTER                             &kp DEL
+&kp Q             &kp W         &kp E         &kp R                  &kp T                                                   &kp Y                    &kp U  &kp I      &kp O    &kp P
+&kp A             &kp S         &kp D         &kp F                  &kp G        &mkp RCLK                  &edit_up LC(Z) LC(C)       &kp H                    &kp J  &kp K      &lt 4 L  &lt 5 MINUS
+&mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                  &kp B        &mkp LCLK                  &edit_down LC(LS(Z)) LC(V) &kp N                    &kp M  &kp COMMA  &kp DOT  &mt LEFT_SHIFT SLASH
+&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt 6 INTERNATIONAL_4  &lt 1 SPACE  &lt 3 TAB      &kp BACKSPACE             &lt 2 ENTER                                      &kp DEL
             >;
 
             sensor-bindings = <&ROTATE SCRL_DOWN SCRL_UP>;
