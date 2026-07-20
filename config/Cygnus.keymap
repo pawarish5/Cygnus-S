@@ -3,11 +3,12 @@
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/bt.h>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/modifiers.h>
 #include <dt-bindings/zmk/pointing.h>
 
 #define MOUSE 4
 #define SCROLL 5
-#define NUM 6
+#define NUM 2
 
 &mt {
     flavor = "balanced";
@@ -30,6 +31,75 @@
             #binding-cells = <1>;
             bindings = <&to 0 &macro_param_1to1 &kp MACRO_PLACEHOLDER>;
             label = "TO_LAYER_0";
+        };
+
+        /*
+         * Windows Alt+0095
+         * アンダースコア "_" を入力する。
+         * NumLockオンが前提。
+         */
+        und: und {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "UND";
+            wait-ms = <40>;
+            tap-ms = <40>;
+
+            bindings
+                = <&macro_press &kp LEFT_ALT>
+                , <&macro_tap
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_9
+                    &kp KP_NUMBER_5>
+                , <&macro_release &kp LEFT_ALT>
+                ;
+        };
+
+        /*
+         * Windows Alt+0092
+         * バックスラッシュ "\" を入力する。
+         * NumLockオンが前提。
+         */
+        bsl: bsl {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "BSL";
+            wait-ms = <40>;
+            tap-ms = <40>;
+
+            bindings
+                = <&macro_press &kp LEFT_ALT>
+                , <&macro_tap
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_9
+                    &kp KP_NUMBER_2>
+                , <&macro_release &kp LEFT_ALT>
+                ;
+        };
+
+        /*
+         * Windows Alt+0124
+         * パイプ "|" を入力する。
+         * NumLockオンが前提。
+         */
+        pipe: pipe {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            label = "PIPE";
+            wait-ms = <40>;
+            tap-ms = <40>;
+
+            bindings
+                = <&macro_press &kp LEFT_ALT>
+                , <&macro_tap
+                    &kp KP_NUMBER_0
+                    &kp KP_NUMBER_1
+                    &kp KP_NUMBER_2
+                    &kp KP_NUMBER_4>
+                , <&macro_release &kp LEFT_ALT>
+                ;
         };
     };
 
@@ -117,6 +187,68 @@
                 <&kp LC(LS(V))>;
         };
 
+        /*
+         * NUMレイヤーのShiftペア
+         *
+         * 単押し：-
+         * Shift併用：_
+         */
+        minus_underscore: minus_underscore {
+            compatible = "zmk,behavior-mod-morph";
+            label = "MIN_UND";
+            #binding-cells = <0>;
+            bindings = <&kp MINUS>, <&und>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        /*
+         * 単押し：=
+         * Shift併用：+
+         */
+        equal_plus: equal_plus {
+            compatible = "zmk,behavior-mod-morph";
+            label = "EQ_PLUS";
+            #binding-cells = <0>;
+            bindings = <&kp LS(MINUS)>, <&kp LS(SEMICOLON)>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        /*
+         * 単押し：;
+         * Shift併用：:
+         */
+        semicolon_colon: semicolon_colon {
+            compatible = "zmk,behavior-mod-morph";
+            label = "SEMI_COL";
+            #binding-cells = <0>;
+            bindings = <&kp SEMICOLON>, <&kp SINGLE_QUOTE>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        /*
+         * 単押し：'
+         * Shift併用："
+         */
+        quote_double_quote: quote_double_quote {
+            compatible = "zmk,behavior-mod-morph";
+            label = "QUOTE_DQ";
+            #binding-cells = <0>;
+            bindings = <&kp LS(NUMBER_7)>, <&kp LS(NUMBER_2)>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
+        /*
+         * 単押し：\
+         * Shift併用：|
+         */
+        backslash_pipe: backslash_pipe {
+            compatible = "zmk,behavior-mod-morph";
+            label = "BSL_PIPE";
+            #binding-cells = <0>;
+            bindings = <&bsl>, <&pipe>;
+            mods = <(MOD_LSFT|MOD_RSFT)>;
+        };
+
         ROTATE: ROTATE {
             compatible = "zmk,behavior-sensor-rotate-var";
             label = "ROTATE";
@@ -135,7 +267,7 @@
 &kp Q             &kp W         &kp E         &kp R                  &kp T                                                   &kp Y              &kp U  &kp I      &kp O    &kp P
 &kp A             &kp S         &kp D         &kp F                  &kp G        &mkp RCLK                  &edit_up_dance       &kp H              &kp J  &kp K      &lt 4 L  &lt 5 MINUS
 &mt LEFT_SHIFT Z  &kp X         &kp C         &kp V                  &kp B        &mkp LCLK                  &edit_down_dance     &kp N              &kp M  &kp COMMA  &kp DOT  &mt LEFT_SHIFT SLASH
-&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt 6 INTERNATIONAL_4  &lt 1 SPACE  &lt 3 TAB      &kp BACKSPACE        &lt 2 ENTER                                  &kp DEL
+&kp LCTRL         &kp LEFT_WIN  &kp LEFT_ALT  &lt 6 INTERNATIONAL_4  &lt 1 SPACE  &lt 3 TAB      &kp BACKSPACE        &lt NUM ENTER                                &kp DEL
             >;
 
             sensor-bindings = <&ROTATE SCRL_DOWN SCRL_UP>;
@@ -150,12 +282,28 @@
             >;
         };
 
+        /*
+         * Enter長押しで呼び出すNUMレイヤー
+         *
+         * 日本語配列での実出力：
+         *
+         * 7     8     9     -/_   =/+       !     @     #     $     ^
+         * 4     5     6     /     *    %    &     [     ]     {     }     `
+         * 1     2     3     .     ,    ;/:  <     >     '/"   ?     ~     \ / |
+         * 0     (     )
+         *
+         * 最下段の残りはすべてtransparent。
+         *
+         * 0：
+         *   単押し 0
+         *   長押し Shift
+         */
         NUM {
             bindings = <
-&kp MINUS                   &kp KP_NUMBER_7  &kp KP_NUMBER_8  &kp KP_NUMBER_9  &kp PLUS                                     &kp CARET         &kp AMPERSAND      &kp TILDE       &kp LEFT_PARENTHESIS  &kp RIGHT_PARENTHESIS
-&kp SLASH                   &kp KP_NUMBER_4  &kp KP_NUMBER_5  &kp KP_NUMBER_6  &kp ASTERISK  &trans         &kp UNDERSCORE  &kp EXCLAMATION   &kp AT_SIGN        &kp HASH        &kp DOLLAR            &kp PERCENT
-&mt LEFT_SHIFT KP_NUMBER_0  &kp KP_NUMBER_1  &kp KP_NUMBER_2  &kp KP_NUMBER_3  &kp PERIOD    &kp EQUAL      &trans          &kp LEFT_BRACKET  &kp RIGHT_BRACKET  &kp LEFT_BRACE  &kp RIGHT_BRACE       &kp BACKSLASH
-&trans                      &trans           &trans           &trans           &trans        &trans         &trans          &trans                                                                     &kp PIPE
+&kp NUMBER_7               &kp NUMBER_8  &kp NUMBER_9  &minus_underscore  &equal_plus                                     &kp EXCLAMATION  &kp LEFT_BRACKET  &kp HASH          &kp DOLLAR        &kp EQUAL
+&kp NUMBER_4               &kp NUMBER_5  &kp NUMBER_6  &kp SLASH          &kp DOUBLE_QUOTES  &kp PERCENT          &kp CARET        &kp RIGHT_BRACKET  &kp NON_US_HASH   &kp RIGHT_BRACE  &kp TILDE2     &kp LEFT_BRACE
+&kp NUMBER_1               &kp NUMBER_2  &kp NUMBER_3  &kp PERIOD         &kp COMMA          &semicolon_colon      &kp LESS_THAN    &kp GREATER_THAN   &quote_double_quote &kp QUESTION    &kp PLUS        &backslash_pipe
+&mt LEFT_SHIFT NUMBER_0    &kp ASTERISK  &kp LEFT_PARENTHESIS  &trans    &trans             &trans                 &trans            &trans               &trans
             >;
         };
 
