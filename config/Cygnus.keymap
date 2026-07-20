@@ -135,9 +135,9 @@
          *
          * 1回：edit_up
          *       単押し Ctrl+C
-         *       長押し Ctrl+Z
+         *       長押し Ctrl+X
          *
-         * 2回：Ctrl+X
+         * 2回：Ctrl+Z
          */
         edit_up_dance: edit_up_dance {
             compatible = "zmk,behavior-tap-dance";
@@ -146,8 +146,8 @@
             tapping-term-ms = <200>;
 
             bindings =
-                <&edit_up LC(Z) LC(C)>,
-                <&kp LC(X)>;
+                <&edit_up LC(X) LC(C)>,
+                <&kp LC(Z)>;
         };
 
         /*
@@ -172,9 +172,9 @@
          *
          * 1回：edit_down
          *       単押し Ctrl+V
-         *       長押し Ctrl+Shift+Z
+         *       長押し Ctrl+Shift+V
          *
-         * 2回：Ctrl+Shift+V
+         * 2回：Ctrl+Shift+Z
          */
         edit_down_dance: edit_down_dance {
             compatible = "zmk,behavior-tap-dance";
@@ -183,8 +183,8 @@
             tapping-term-ms = <200>;
 
             bindings =
-                <&edit_down LC(LS(Z)) LC(V)>,
-                <&kp LC(LS(V))>;
+                <&edit_down LC(LS(V)) LC(V)>,
+                <&kp LC(LS(Z))>;
         };
 
         /*
@@ -287,10 +287,10 @@
          *
          * 日本語配列での実出力：
          *
-         * 7     8     9     -/_   =/+       !     @     #     $     ^
-         * 4     5     6     /     *    %    &     [     ]     {     }     `
-         * 1     2     3     .     ,    ;/:  <     >     '/"   ?     ~     \ / |
-         * 0     (     )
+         * -/_   =/+   7     8     9         !     @     #     $     ^
+         * /     *     4     5     6    %    &     [     ]     {     }     `
+         * .     ,     1     2     3    ;/:  <     >     '/"   ?     ~     \ / |
+         * (     )     0
          *
          * 最下段の残りはすべてtransparent。
          *
@@ -300,10 +300,10 @@
          */
         NUM {
             bindings = <
-&kp NUMBER_7             &kp NUMBER_8  &kp NUMBER_9  &minus_underscore  &equal_plus                                      &kp EXCLAMATION  &kp LEFT_BRACKET   &kp HASH           &kp DOLLAR          &kp EQUAL
-&kp NUMBER_4             &kp NUMBER_5  &kp NUMBER_6  &kp SLASH          &kp DOUBLE_QUOTES  &kp PERCENT          &kp CARET        &kp RIGHT_BRACKET  &kp NON_US_HASH    &kp RIGHT_BRACE     &kp TILDE2  &kp LEFT_BRACE
-&kp NUMBER_1             &kp NUMBER_2  &kp NUMBER_3  &kp PERIOD         &kp COMMA          &semicolon_colon      &kp LESS_THAN    &kp GREATER_THAN   &quote_double_quote &kp QUESTION        &kp PLUS    &backslash_pipe
-&mt LEFT_SHIFT NUMBER_0  &kp ASTERISK  &kp LEFT_PARENTHESIS           &trans             &trans                 &trans            &trans              &trans               &trans
+&minus_underscore  &equal_plus          &kp NUMBER_7             &kp NUMBER_8            &kp NUMBER_9                                  &kp EXCLAMATION  &kp LEFT_BRACKET   &kp HASH           &kp DOLLAR          &kp EQUAL
+&kp SLASH          &kp DOUBLE_QUOTES    &kp NUMBER_4             &kp NUMBER_5            &kp NUMBER_6  &kp PERCENT          &kp CARET        &kp RIGHT_BRACKET  &kp NON_US_HASH    &kp RIGHT_BRACE     &kp TILDE2  &kp LEFT_BRACE
+&kp PERIOD         &kp COMMA            &kp NUMBER_1             &kp NUMBER_2            &kp NUMBER_3  &semicolon_colon      &kp LESS_THAN    &kp GREATER_THAN   &quote_double_quote &kp QUESTION        &kp PLUS    &backslash_pipe
+&kp ASTERISK       &kp LEFT_PARENTHESIS &mt LEFT_SHIFT NUMBER_0  &trans                  &trans        &trans                &trans           &trans              &trans
             >;
         };
 
