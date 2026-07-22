@@ -144,12 +144,6 @@
         /*
          * Enterの単押し／長押し
          *
-         * 第1引数：
-         *   num_ime_layerは引数を使用しないため、0を渡す。
-         *
-         * 第2引数：
-         *   単押し時のキーコード。
-         *
          * 使用例：
          *   &num_ime_enter 0 ENTER
          *
@@ -248,28 +242,30 @@
         };
 
         /*
-         * NUMレイヤーのShiftペア
+         * NUMレイヤー左上
          *
-         * 単押し：-
-         * Shift併用：_
+         * 単押し：_
+         * Shift併用：=
          */
-        minus_underscore: minus_underscore {
+        underscore_equal: underscore_equal {
             compatible = "zmk,behavior-mod-morph";
-            label = "MIN_UND";
+            label = "UND_EQ";
             #binding-cells = <0>;
-            bindings = <&kp MINUS>, <&und>;
+            bindings = <&und>, <&kp LS(MINUS)>;
             mods = <(MOD_LSFT | MOD_RSFT)>;
         };
 
         /*
-         * 単押し：=
+         * NUMレイヤー右上
+         *
+         * 単押し：-
          * Shift併用：+
          */
-        equal_plus: equal_plus {
+        minus_plus: minus_plus {
             compatible = "zmk,behavior-mod-morph";
-            label = "EQ_PLUS";
+            label = "MIN_PLUS";
             #binding-cells = <0>;
-            bindings = <&kp LS(MINUS)>, <&kp LS(SEMICOLON)>;
+            bindings = <&kp MINUS>, <&kp LS(SEMICOLON)>;
             mods = <(MOD_LSFT | MOD_RSFT)>;
         };
 
@@ -358,10 +354,10 @@
          *
          * 日本語配列での実出力：
          *
-         * -/_   =/+   7     8     9         !     @     #     $     ^
-         * /     *     4     5     6    %    &     [     ]     {     }     `
-         * .     ,     1     2     3    ;/:  <     >     '/"   ?     ~     \ / |
-         * (     )     0
+         * _/=   7     8     9     -/+       !     @     #     $     ^
+         * /     4     5     6     *    %    &     [     ]     {     }     `
+         * .     1     2     3     ,    ;/:  <     >     '/"   ?     ~     \ / |
+         * (     0     )
          *
          * 最下段の残りはすべてtransparent。
          *
@@ -371,10 +367,10 @@
          */
         NUM {
             bindings = <
-&minus_underscore  &equal_plus          &kp NUMBER_7             &kp NUMBER_8            &kp NUMBER_9                                  &kp EXCLAMATION  &kp LEFT_BRACKET   &kp HASH           &kp DOLLAR          &kp EQUAL
-&kp SLASH          &kp DOUBLE_QUOTES    &kp NUMBER_4             &kp NUMBER_5            &kp NUMBER_6  &kp PERCENT          &kp CARET        &kp RIGHT_BRACKET  &kp NON_US_HASH    &kp RIGHT_BRACE     &kp TILDE2  &kp LEFT_BRACE
-&kp PERIOD         &kp COMMA            &kp NUMBER_1             &kp NUMBER_2            &kp NUMBER_3  &semicolon_colon      &kp LESS_THAN    &kp GREATER_THAN   &quote_double_quote &kp QUESTION        &kp PLUS    &backslash_pipe
-&kp ASTERISK       &kp LEFT_PARENTHESIS &mt LEFT_SHIFT NUMBER_0  &trans                  &trans        &trans                &trans           &trans              &trans
+&underscore_equal  &kp NUMBER_7             &kp NUMBER_8            &kp NUMBER_9             &minus_plus                                      &kp EXCLAMATION  &kp LEFT_BRACKET   &kp HASH           &kp DOLLAR          &kp EQUAL
+&kp SLASH          &kp NUMBER_4             &kp NUMBER_5            &kp NUMBER_6             &kp DOUBLE_QUOTES  &kp PERCENT          &kp CARET        &kp RIGHT_BRACKET  &kp NON_US_HASH    &kp RIGHT_BRACE     &kp TILDE2  &kp LEFT_BRACE
+&kp PERIOD         &kp NUMBER_1             &kp NUMBER_2            &kp NUMBER_3             &kp COMMA          &semicolon_colon      &kp LESS_THAN    &kp GREATER_THAN   &quote_double_quote &kp QUESTION        &kp PLUS    &backslash_pipe
+&kp ASTERISK       &mt LEFT_SHIFT NUMBER_0  &kp LEFT_PARENTHESIS    &trans                   &trans             &trans                &trans           &trans              &trans
             >;
         };
 
